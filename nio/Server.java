@@ -1,4 +1,4 @@
-package lesson_1;
+package nio;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -12,6 +12,9 @@ import java.util.Set;
 
 public class Server {
 
+    String receivedMsg;
+    String echoMsg;
+
     public static void main(String[] args) throws IOException {
         new Server().start();
     }
@@ -23,7 +26,7 @@ public class Server {
         serverSocket.configureBlocking(false);
         serverSocket.register(selector, SelectionKey.OP_ACCEPT);
 
-        System.out.println("Server started");
+        System.out.println("Server started on port 9000");
 
         while (true) {
             selector.select();
@@ -39,11 +42,6 @@ public class Server {
                 if (selectionKey.isReadable()) {
                     System.out.println("New selector readable event");
                     readMessage(selectionKey);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
                 iterator.remove();
             }
@@ -61,12 +59,13 @@ public class Server {
         SocketChannel client = (SocketChannel) key.channel();
         ByteBuffer byteBuffer = ByteBuffer.allocate(256);
         client.read(byteBuffer);
+        receivedMsg = new String(byteBuffer.array());
+        System.out.println("Server get message: " + receivedMsg);
+        echoMsg = "echo " + receivedMsg;
+        byteBuffer = ByteBuffer.allocate(echoMsg.getBytes().length);
+        byteBuffer.put(echoMsg.getBytes());
         byteBuffer.flip();
         client.write(byteBuffer);
-        byteBuffer.flip();
-        String message = new String(byteBuffer.array());
-        System.out.println("New message: " + message + " from thread: " + Thread.currentThread().getName());
-        byteBuffer.clear();
     }
 }
 

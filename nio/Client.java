@@ -1,4 +1,4 @@
-package lesson_1;
+package nio;
 
 
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class Client {
                     ).getBytes()));
                     buffer.clear();
                     channel.read(buffer);
-                    System.out.println("echo " + new String(buffer.array()).trim());
+                    System.out.println(new String(buffer.array()).trim());
                     buffer.clear();
                 }
             } catch (IOException e) {
