@@ -39,6 +39,11 @@ public class Server {
                 if (selectionKey.isReadable()) {
                     System.out.println("New selector readable event");
                     readMessage(selectionKey);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 iterator.remove();
             }
@@ -58,6 +63,7 @@ public class Server {
         client.read(byteBuffer);
         byteBuffer.flip();
         client.write(byteBuffer);
+        byteBuffer.flip();
         String message = new String(byteBuffer.array());
         System.out.println("New message: " + message + " from thread: " + Thread.currentThread().getName());
         byteBuffer.clear();
