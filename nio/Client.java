@@ -8,7 +8,6 @@ import java.nio.channels.SocketChannel;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-
 public class Client {
 
     ByteBuffer buffer;
