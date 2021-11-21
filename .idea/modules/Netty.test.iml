@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="Netty:test" external.linked.project.path="$MODULE_DIR$/../../Netty" external.root.project.path="$MODULE_DIR$/../../netty" external.system.id="GRADLE" external.system.module.group="org.example" external.system.module.type="sourceSet" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_X">
+    <output-test url="file://$MODULE_DIR$/../../Netty/build/classes/java/test" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../Netty/src/test" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Netty.main" />
+    <orderEntry type="library" name="Gradle: io.netty:netty-all:4.1.59.Final" level="project" />
+  </component>
+  <component name="TestModuleProperties" production-module="Netty.main" />
+</module>
