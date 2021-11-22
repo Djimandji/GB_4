@@ -7,42 +7,54 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 
-    public class EchoServer {
-        private int port;
+public class EchoServer {
+        private final int port;
+
+        public static void main(String[] args) throws InterruptedException {
+            new EchoServer(9000).start();
+        }
 
         public EchoServer(int port) {
             this.port = port;
         }
 
-        public void run() throws Exception {
-            EventLoopGroup bossGroup = new NioEventLoopGroup();
+        public void start() throws InterruptedException {
+            NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
             NioEventLoopGroup workerGroup = new NioEventLoopGroup();
-
             try {
-                ServerBootstrap b = new ServerBootstrap();
-                ((ServerBootstrap)((ServerBootstrap)b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)).childHandler(new ChannelInitializer<SocketChannel>() {
-                    public void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new ChannelHandler[]{new EchoServerHandler()});
-                    }
-                }).option(ChannelOption.SO_BACKLOG, 128)).childOption(ChannelOption.SO_KEEPALIVE, true);
-                ChannelFuture f = b.bind(this.port).sync();
-                f.channel().closeFuture().sync();
+                ServerBootstrap server = new ServerBootstrap();
+                server
+                        .group(bossGroup, workerGroup)
+                        .channel(NioServerSocketChannel.class)
+                        .childHandler(new ChannelInitializer<NioSocketChannel>() {
+                            @Override
+                            protected void initChannel(NioSocketChannel ch) {
+                                ch.pipeline().addLast(
+                                        new LengthFieldBasedFrameDecoder(1024 * 1024, 0, 3, 0, 3),
+                                        new LengthFieldPrepender(3),
+                                        new StringDecoder(),
+                                        new StringEncoder(),
+                                        new EchoServerHandler()
+                                );
+                            }
+                        })
+                        .option(ChannelOption.SO_BACKLOG, 128)
+                        .childOption(ChannelOption.SO_KEEPALIVE, true);
+
+                ChannelFuture future = server.bind(port).sync();
+
+                System.out.println("Server started");
+
+                future.channel().closeFuture().sync();
             } finally {
-                workerGroup.shutdownGracefully();
                 bossGroup.shutdownGracefully();
+                workerGroup.shutdownGracefully();
             }
-
-        }
-
-        public static void main(String[] args) throws Exception {
-            int port;
-            if (args.length > 0) {
-                port = Integer.parseInt(args[0]);
-            } else {
-                port = 8080;
-            }
-
-            (new EchoServer(port)).run();
         }
     }
