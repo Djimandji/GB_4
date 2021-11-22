@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: io.netty:netty-all:4.1.59.Final">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../IDEA/JetBrains IntelliJ IDEA Ultimate 2020.1 x64/caches/modules-2/files-2.1/io.netty/netty-all/4.1.59.Final/4d83eab2c554587e15fa9cc20de48c530b23c479/netty-all-4.1.59.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../IDEA/JetBrains IntelliJ IDEA Ultimate 2020.1 x64/caches/modules-2/files-2.1/io.netty/netty-all/4.1.59.Final/57f6d8bbe7c31d7c0f3c603b3d3fa9c8b652ee2f/netty-all-4.1.59.Final-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
