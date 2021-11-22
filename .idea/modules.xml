@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GB_4.iml" filepath="$PROJECT_DIR$/GB_4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Netty.iml" filepath="$PROJECT_DIR$/.idea/modules/Netty.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Netty.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Netty.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Netty.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Netty.test.iml" />
     </modules>
   </component>
 </project>
